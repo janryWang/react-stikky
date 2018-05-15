@@ -9,6 +9,10 @@ function isValid(d) {
     return d !== undefined && d !== null
 }
 
+function getNum(val) {
+    return val !== undefined ? parseInt(val) : 0
+}
+
 function getValidVal(...args) {
     for (let i = 0; i < args.length; i++) {
         if (isValid(args[i])) {
@@ -138,7 +142,6 @@ class Sticky extends Component {
                     bottom: self.props.triggerDistance + "px"
                 })
                 let containerNode = this.container
-                let styles = getCompStyle(this.container)
                 self.setStyle(self.container, {
                     left: "",
                     zIndex: "",
@@ -175,7 +178,7 @@ class Sticky extends Component {
                 return ok.call(self)
             }
         } else {
-            if (nodeData.scrollTop >= nodeData.offsetTop + nodeData.height) {
+            if (winData.scrollTop > nodeData.offsetTop + triggerDistance) {
                 return ok.call(self)
             }
         }
@@ -189,9 +192,10 @@ class Sticky extends Component {
             let offsetLeft = offset ? offset.left : 0
             let offsetTop = offset ? offset.top : 0
             const rect = node.getBoundingClientRect()
+            const style = getCompStyle(node)
             return {
-                offsetLeft,
-                offsetTop,
+                offsetLeft: offsetLeft - getNum(style["margin-left"]),
+                offsetTop: offsetTop - getNum(style["margin-top"]),
                 width: rect.width,
                 height: rect.height
             }
