@@ -104,7 +104,7 @@ class Sticky extends Component {
                     height: nodeData.height + "px",
                     top: this.props.triggerDistance + "px",
                     left: nodeData.offsetLeft + "px",
-                    zIndex: "100000",
+                    zIndex: self.props.zIndex || "100000",
                     ...this.props.stickiedStyle
                 })
                 if (this.sticking) return
@@ -131,7 +131,7 @@ class Sticky extends Component {
                     height: nodeData.height + "px",
                     bottom: self.props.triggerDistance + "px",
                     left: nodeData.offsetLeft + "px",
-                    zIndex: "100000",
+                    zIndex: self.props.zIndex || "100000",
                     ...this.props.stickiedStyle
                 })
                 if (this.sticking) return

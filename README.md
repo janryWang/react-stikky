@@ -37,6 +37,9 @@ npm install --save react-stikky
 
 > The distance to trigger the boundary.(default is 0)
 
+#### `zIndex : Number | String`
+
+
 ### LICENSE
 
 The MIT License (MIT)
