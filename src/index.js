@@ -215,7 +215,6 @@ class Sticky extends Component {
         let oldNode = this.getContainerNode()
         let nodeData = this.getNodeData(oldNode)
         this.wrapperNode = document.createElement("div")
-        this.wrapperNode.style.width = nodeData.width + "px"
         this.wrapperNode.style.height = nodeData.height + "px"
         this.wrapperNode.classList.add("sticky-wrapper")
         oldNode.parentNode.insertBefore(this.wrapperNode, oldNode)
