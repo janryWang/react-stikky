@@ -7,7 +7,7 @@ function getPixelSize(element, style, property, fontSize) {
     fontSize =
         fontSize != null
             ? fontSize
-            : /%|em/.test(suffix) && element.parentElement
+            : /%|em/.test(suffix) && element && element.parentElement
                 ? getPixelSize(
                       element.parentElement,
                       element.parentElement.currentStyle,
