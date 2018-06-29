@@ -1,5 +1,7 @@
 # react-stikky
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/janryWang/react-stikky.svg)](https://greenkeeper.io/)
+
 > It's very easy to sticky fixed target element.
 
 
