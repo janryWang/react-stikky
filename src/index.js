@@ -32,7 +32,7 @@ class Sticky extends Component {
     }
 
     getContainerNode() {
-        let { stickyContainer } = this.refs
+        let stickyContainer = this.stickyContainer
         let { findDOMNode } = ReactDOM
         this.container = stickyContainer
         return findDOMNode(stickyContainer)
@@ -234,7 +234,9 @@ class Sticky extends Component {
     renderContainer() {
         return (
             <div
-                ref="stickyContainer"
+                ref={inst => {
+                    if (inst) this.stickyContainer = inst
+                }}
                 className="sticky-container"
                 style={this.props.style}
             >
