@@ -69,7 +69,7 @@ class Sticky extends Component {
                 requestAnimationFrame(() => {
                     context.ifSticky(
                         () => {
-                            this.setState({
+                            context.setState({
                                 isSticky: true,
                                 window: {
                                     height: window.innerHeight,
@@ -79,7 +79,7 @@ class Sticky extends Component {
                             context.sticky()
                         },
                         () => {
-                            this.setState({
+                            context.setState({
                                 isSticky: true,
                                 window: {
                                     height: window.innerHeight,
