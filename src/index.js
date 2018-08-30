@@ -27,10 +27,6 @@ class Sticky extends Component {
         triggerDistance: 0
     }
 
-    state = {
-        sticking: false
-    }
-
     getContainerNode() {
         let stickyContainer = this.stickyContainer
         let { findDOMNode } = ReactDOM
@@ -73,9 +69,23 @@ class Sticky extends Component {
                 requestAnimationFrame(() => {
                     context.ifSticky(
                         () => {
+                            this.setState({
+                                isSticky: true,
+                                window: {
+                                    height: window.innerHeight,
+                                    width: window.innerWidth
+                                }
+                            })
                             context.sticky()
                         },
                         () => {
+                            this.setState({
+                                isSticky: true,
+                                window: {
+                                    height: window.innerHeight,
+                                    width: window.innerWidth
+                                }
+                            })
                             context.sticky(false)
                         }
                     )
@@ -178,7 +188,7 @@ class Sticky extends Component {
                 return ok.call(self)
             }
         } else {
-            if (winData.scrollTop > nodeData.offsetTop + triggerDistance) {
+            if (winData.scrollTop > nodeData.offsetTop - triggerDistance) {
                 return ok.call(self)
             }
         }
@@ -232,6 +242,7 @@ class Sticky extends Component {
     }
 
     renderContainer() {
+        const { children } = this.props
         return (
             <div
                 ref={inst => {
@@ -240,7 +251,9 @@ class Sticky extends Component {
                 className="sticky-container"
                 style={this.props.style}
             >
-                {this.props.children}
+                {typeof children === "function"
+                    ? children(this.state)
+                    : children}
             </div>
         )
     }
