@@ -27,6 +27,14 @@ class Sticky extends Component {
         triggerDistance: 0
     }
 
+    state = {
+        isSticky: false,
+        window: {
+            height: window.innerHeight,
+            width: window.innerWidth
+        }
+    }
+
     getContainerNode() {
         let stickyContainer = this.stickyContainer
         let { findDOMNode } = ReactDOM
