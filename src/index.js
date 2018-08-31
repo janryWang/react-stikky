@@ -95,7 +95,7 @@ class Sticky extends Component {
                         },
                         () => {
                             context.setState({
-                                isSticky: true,
+                                isSticky: false,
                                 window: {
                                     height: window.innerHeight,
                                     width: window.innerWidth
@@ -228,8 +228,8 @@ class Sticky extends Component {
             return {
                 height: window.innerHeight,
                 width: window.innerWidth,
-                scrollTop: window.scrollY,
-                scrollLeft: window.scrollX
+                scrollTop: window.pageYOffset,
+                scrollLeft: window.pageXOffset
             }
         }
         return this.nodeData
