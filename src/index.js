@@ -71,10 +71,17 @@ class Sticky extends Component {
     }
 
     onScrollHandler(context) {
+        let { createState } = context.props
         let handler =
             context.bindHandler ||
             function() {
                 requestAnimationFrame(() => {
+                    if (createState) {
+                        const state = createState()
+                        if (state) {
+                            context.setState(state)
+                        }
+                    }
                     context.ifSticky(
                         () => {
                             context.setState({
