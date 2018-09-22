@@ -121,10 +121,8 @@ class Sticky extends Component {
         let positionNode = this.getPositionNode()
         let nodeData = this.getNodeData(positionNode)
         let self = this
-        let stateSticky =
-            this.state.isSticky !== undefined ? this.state.isSticky : true
         if (this.props.edge == "top") {
-            if (isSticky && stateSticky) {
+            if (isSticky) {
                 this.setStyle(this.container, {
                     position: "fixed",
                     width: nodeData.width + "px",
@@ -151,7 +149,7 @@ class Sticky extends Component {
                 this.sticking = false
             }
         } else {
-            if (isSticky && stateSticky) {
+            if (isSticky) {
                 this.setStyle(this.container, {
                     position: "fixed",
                     width: nodeData.width + "px",
@@ -197,15 +195,21 @@ class Sticky extends Component {
         let self = this
         let edge = self.props.edge
         let triggerDistance = self.props.triggerDistance
+        let stateSticky =
+            this.state.isSticky !== undefined ? this.state.isSticky : true
         if (edge != "top") {
             if (
                 winData.scrollTop + winData.height <
-                nodeData.offsetTop + nodeData.height + triggerDistance
+                    nodeData.offsetTop + nodeData.height + triggerDistance &&
+                stateSticky
             ) {
                 return ok.call(self)
             }
         } else {
-            if (winData.scrollTop > nodeData.offsetTop - triggerDistance) {
+            if (
+                winData.scrollTop > nodeData.offsetTop - triggerDistance &&
+                stateSticky
+            ) {
                 return ok.call(self)
             }
         }
