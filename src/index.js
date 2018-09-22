@@ -121,8 +121,10 @@ class Sticky extends Component {
         let positionNode = this.getPositionNode()
         let nodeData = this.getNodeData(positionNode)
         let self = this
+        let stateSticky =
+            this.state.isSticky !== undefined ? this.state.isSticky : true
         if (this.props.edge == "top") {
-            if (isSticky) {
+            if (isSticky && stateSticky) {
                 this.setStyle(this.container, {
                     position: "fixed",
                     width: nodeData.width + "px",
@@ -149,7 +151,7 @@ class Sticky extends Component {
                 this.sticking = false
             }
         } else {
-            if (isSticky) {
+            if (isSticky && stateSticky) {
                 this.setStyle(this.container, {
                     position: "fixed",
                     width: nodeData.width + "px",
