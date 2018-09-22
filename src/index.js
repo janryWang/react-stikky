@@ -195,8 +195,10 @@ class Sticky extends Component {
         let self = this
         let edge = self.props.edge
         let triggerDistance = self.props.triggerDistance
-        let stateSticky =
-            this.state.isSticky !== undefined ? this.state.isSticky : true
+        let isNotSticky = this.state.notSticky
+        if (isNotSticky) {
+            return faild.call(self)
+        }
         if (edge != "top") {
             if (
                 winData.scrollTop + winData.height <
