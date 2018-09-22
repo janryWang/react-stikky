@@ -202,16 +202,12 @@ class Sticky extends Component {
         if (edge != "top") {
             if (
                 winData.scrollTop + winData.height <
-                    nodeData.offsetTop + nodeData.height + triggerDistance &&
-                stateSticky
+                nodeData.offsetTop + nodeData.height + triggerDistance
             ) {
                 return ok.call(self)
             }
         } else {
-            if (
-                winData.scrollTop > nodeData.offsetTop - triggerDistance &&
-                stateSticky
-            ) {
+            if (winData.scrollTop > nodeData.offsetTop - triggerDistance) {
                 return ok.call(self)
             }
         }
