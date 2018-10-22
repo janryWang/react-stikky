@@ -2,8 +2,6 @@
 
 > It's very easy to sticky fixed target element.
 
-
-
 ### Usage
 
 ```
