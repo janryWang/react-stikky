@@ -22,7 +22,7 @@ function getValidVal(...args) {
 }
 
 function isFn(val) {
-    return typeof val === "object"
+    return typeof val === "function"
 }
 
 class Sticky extends Component {
