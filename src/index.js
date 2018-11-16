@@ -21,6 +21,10 @@ function getValidVal(...args) {
     }
 }
 
+function isFn(val) {
+    return typeof val === "object"
+}
+
 class Sticky extends Component {
     static defaultProps = {
         edge: "bottom",
@@ -194,8 +198,12 @@ class Sticky extends Component {
         let winData = this.getNodeData(window)
         let self = this
         let edge = self.props.edge
+        let getStickyBoundary = self.props.getStickyBoundary
         let triggerDistance = self.props.triggerDistance
         let isNotSticky = this.state.notSticky
+        if (isFn(getStickyBoundary)) {
+            if (!getStickyBoundary()) return faild.call(self)
+        }
         if (isNotSticky) {
             return faild.call(self)
         }

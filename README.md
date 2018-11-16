@@ -37,6 +37,9 @@ npm install --save react-stikky
 
 #### `zIndex : Number | String`
 
+#### `getStickyBoundary : Function`
+
+
 
 ### LICENSE
 
