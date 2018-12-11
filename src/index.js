@@ -1,5 +1,4 @@
 import React, { Component, cloneElement } from "react"
-import ReactDOM from "react-dom"
 import ClassNames from "classnames"
 import { getCompStyle } from "./utils"
 import docOffset from "./offset"
@@ -39,11 +38,12 @@ class Sticky extends Component {
         }
     }
 
+    StickyRef = React.createRef()
+
     getContainerNode() {
-        let stickyContainer = this.stickyContainer
-        let { findDOMNode } = ReactDOM
-        this.container = stickyContainer
-        return findDOMNode(stickyContainer)
+        let stickyContainer = this.StickyRef
+        this.container = stickyContainer && stickyContainer.current
+        return this.container
     }
 
     componentDidMount() {
@@ -272,9 +272,7 @@ class Sticky extends Component {
         const { children } = this.props
         return (
             <div
-                ref={inst => {
-                    if (inst) this.stickyContainer = inst
-                }}
+                ref={this.StickyRef}
                 className="sticky-container"
                 style={this.props.style}
             >
