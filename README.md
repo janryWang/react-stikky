@@ -4,7 +4,7 @@
 
 ### Usage
 
-```
+```jsx
 import React from "react"
 import ReactDOM from "react-dom"
 import Stikky from "react-stikky"

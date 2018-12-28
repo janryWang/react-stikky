@@ -1,6 +1,6 @@
 {
   "name": "react-stikky",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -76,6 +76,7 @@
     }
   },
   "dependencies": {
+    "classnames": "^2.2.6",
     "window-scroll": "^1.0.0"
   }
 }
