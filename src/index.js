@@ -78,7 +78,7 @@ class Sticky extends Component {
         let { createState } = context.props
         let handler =
             context.bindHandler ||
-            function() {
+            function(e) {
                 requestAnimationFrame(() => {
                     if (createState) {
                         const state = createState()
@@ -95,7 +95,7 @@ class Sticky extends Component {
                                     width: window.innerWidth
                                 }
                             })
-                            context.sticky()
+                            context.sticky(true, e.type)
                         },
                         () => {
                             context.setState({
@@ -105,7 +105,7 @@ class Sticky extends Component {
                                     width: window.innerWidth
                                 }
                             })
-                            context.sticky(false)
+                            context.sticky(false, e.type)
                         }
                     )
                 })
@@ -121,7 +121,7 @@ class Sticky extends Component {
         })
     }
 
-    sticky(isSticky = true) {
+    sticky(isSticky = true, type) {
         let positionNode = this.getPositionNode()
         let nodeData = this.getNodeData(positionNode)
         let self = this
@@ -130,6 +130,7 @@ class Sticky extends Component {
                 var newHeight = this.getOldNodeHeight()
                 if (this.oldNodeHeight !== newHeight) {
                     this.wrapperNode.style.height = newHeight + "px"
+                    this.oldNodeHeight = newHeight
                 }
                 this.setStyle(this.container, {
                     position: "fixed",
@@ -142,7 +143,7 @@ class Sticky extends Component {
                 })
                 this.sticking = true
             } else {
-                this.wrapperNode.style.height = "auto"
+                if (type === "resize") this.wrapperNode.style.height = "auto"
                 self.setStyle(self.container, {
                     left: "",
                     zIndex: "",
@@ -152,7 +153,6 @@ class Sticky extends Component {
                     top: "",
                     ...self.props.unstickiedStyle
                 })
-
                 this.sticking = false
             }
         } else {
@@ -160,6 +160,7 @@ class Sticky extends Component {
                 var newHeight = this.getOldNodeHeight()
                 if (this.oldNodeHeight !== newHeight) {
                     this.wrapperNode.style.height = newHeight + "px"
+                    this.oldNodeHeight = newHeight
                 }
                 this.setStyle(this.container, {
                     position: "fixed",
@@ -172,7 +173,7 @@ class Sticky extends Component {
                 })
                 this.sticking = true
             } else {
-                this.wrapperNode.style.height = "auto"
+                if (type === "resize") this.wrapperNode.style.height = "auto"
                 this.setStyle(this.container, {
                     bottom: self.props.triggerDistance + "px"
                 })
@@ -254,16 +255,16 @@ class Sticky extends Component {
     }
 
     getOldNodeHeight() {
-        let nodeData = this.getNodeData(this.oldNode)
-        this.oldNodeHeight = nodeData.height
+        var nodeData = this.getNodeData(this.oldNode)
         return nodeData.height
     }
 
     initCloneContainerNode() {
         if (this.wrapperNode) return this.wrapperNode
         this.oldNode = this.getContainerNode()
+        this.oldNodeHeight = this.getOldNodeHeight()
         this.wrapperNode = document.createElement("div")
-        this.wrapperNode.style.height = this.getOldNodeHeight() + "px"
+        this.wrapperNode.style.height = this.oldNodeHeight + "px"
         this.wrapperNode.classList.add("sticky-wrapper")
         this.oldNode.parentNode.insertBefore(this.wrapperNode, this.oldNode)
         this.wrapperNode.appendChild(this.oldNode)
