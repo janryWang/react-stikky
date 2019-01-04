@@ -86,10 +86,6 @@ class Sticky extends Component {
                             context.setState(state)
                         }
                     }
-                    let newHeight = context.getOldNodeHeight()
-                    if (context.oldNodeHeight !== newHeight) {
-                        context.wrapperNode.style.height = newHeight + "px"
-                    }
                     context.ifSticky(
                         () => {
                             context.setState({
@@ -131,7 +127,10 @@ class Sticky extends Component {
         let self = this
         if (this.props.edge == "top") {
             if (isSticky) {
-                if (this.sticking) return
+                var newHeight = this.getOldNodeHeight()
+                if (this.oldNodeHeight !== newHeight) {
+                    this.wrapperNode.style.height = newHeight + "px"
+                }
                 this.setStyle(this.container, {
                     position: "fixed",
                     width: nodeData.width + "px",
@@ -143,7 +142,7 @@ class Sticky extends Component {
                 })
                 this.sticking = true
             } else {
-                if (!this.sticking) return
+                this.wrapperNode.style.height = "auto"
                 self.setStyle(self.container, {
                     left: "",
                     zIndex: "",
@@ -158,7 +157,10 @@ class Sticky extends Component {
             }
         } else {
             if (isSticky) {
-                if (this.sticking) return
+                var newHeight = this.getOldNodeHeight()
+                if (this.oldNodeHeight !== newHeight) {
+                    this.wrapperNode.style.height = newHeight + "px"
+                }
                 this.setStyle(this.container, {
                     position: "fixed",
                     width: nodeData.width + "px",
@@ -170,7 +172,7 @@ class Sticky extends Component {
                 })
                 this.sticking = true
             } else {
-                if (!this.sticking) return
+                this.wrapperNode.style.height = "auto"
                 this.setStyle(this.container, {
                     bottom: self.props.triggerDistance + "px"
                 })
