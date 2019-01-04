@@ -10,7 +10,7 @@ import ReactDOM from "react-dom"
 import Stikky from "react-stikky"
 
 ReactDOM.render(
-   <Stikky edge="bottom">
+   <Stikky edge="top" style={{background:"#fff"}}>
       <div>Hello world</div>
    </Stikky>
 )

@@ -86,6 +86,10 @@ class Sticky extends Component {
                             context.setState(state)
                         }
                     }
+                    let newHeight = this.getOldNodeHeight()
+                    if (this.oldNodeHeight !== newHeight) {
+                        this.wrapperNode.style.height = newHeight + "px"
+                    }
                     context.ifSticky(
                         () => {
                             context.setState({
@@ -127,6 +131,7 @@ class Sticky extends Component {
         let self = this
         if (this.props.edge == "top") {
             if (isSticky) {
+                if (this.sticking) return
                 this.setStyle(this.container, {
                     position: "fixed",
                     width: nodeData.width + "px",
@@ -136,7 +141,6 @@ class Sticky extends Component {
                     zIndex: self.props.zIndex || "100000",
                     ...this.props.stickiedStyle
                 })
-                if (this.sticking) return
                 this.sticking = true
             } else {
                 if (!this.sticking) return
@@ -154,6 +158,7 @@ class Sticky extends Component {
             }
         } else {
             if (isSticky) {
+                if (this.sticking) return
                 this.setStyle(this.container, {
                     position: "fixed",
                     width: nodeData.width + "px",
@@ -163,7 +168,6 @@ class Sticky extends Component {
                     zIndex: self.props.zIndex || "100000",
                     ...this.props.stickiedStyle
                 })
-                if (this.sticking) return
                 this.sticking = true
             } else {
                 if (!this.sticking) return
@@ -247,12 +251,17 @@ class Sticky extends Component {
         return this.nodeData
     }
 
-    initCloneContainerNode() {
-        if (this.wrapperNode) return this.wrapperNode
+    getOldNodeHeight() {
         let oldNode = this.getContainerNode()
         let nodeData = this.getNodeData(oldNode)
+        this.oldNodeHeight = nodeData.height
+        return nodeData.height
+    }
+
+    initCloneContainerNode() {
+        if (this.wrapperNode) return this.wrapperNode
         this.wrapperNode = document.createElement("div")
-        this.wrapperNode.style.height = nodeData.height + "px"
+        this.wrapperNode.style.height = getOldNodeHeight() + "px"
         this.wrapperNode.classList.add("sticky-wrapper")
         oldNode.parentNode.insertBefore(this.wrapperNode, oldNode)
         this.wrapperNode.appendChild(oldNode)
