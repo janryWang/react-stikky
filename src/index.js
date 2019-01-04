@@ -261,7 +261,7 @@ class Sticky extends Component {
     initCloneContainerNode() {
         if (this.wrapperNode) return this.wrapperNode
         this.wrapperNode = document.createElement("div")
-        this.wrapperNode.style.height = getOldNodeHeight() + "px"
+        this.wrapperNode.style.height = this.getOldNodeHeight() + "px"
         this.wrapperNode.classList.add("sticky-wrapper")
         oldNode.parentNode.insertBefore(this.wrapperNode, oldNode)
         this.wrapperNode.appendChild(oldNode)
