@@ -86,9 +86,9 @@ class Sticky extends Component {
                             context.setState(state)
                         }
                     }
-                    let newHeight = this.getOldNodeHeight()
-                    if (this.oldNodeHeight !== newHeight) {
-                        this.wrapperNode.style.height = newHeight + "px"
+                    let newHeight = context.getOldNodeHeight()
+                    if (context.oldNodeHeight !== newHeight) {
+                        context.wrapperNode.style.height = newHeight + "px"
                     }
                     context.ifSticky(
                         () => {
