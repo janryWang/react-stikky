@@ -222,7 +222,10 @@ class Sticky extends Component {
                 return ok.call(self)
             }
         } else {
-            if (winData.scrollTop > nodeData.offsetTop - triggerDistance) {
+            if (
+                winData.scrollTop > nodeData.offsetTop - triggerDistance &&
+                nodeData.offsetTop > 0
+            ) {
                 return ok.call(self)
             }
         }
@@ -273,11 +276,25 @@ class Sticky extends Component {
     cancelEvents() {
         window.removeEventListener("scroll", this.onScrollHandler(this))
         window.removeEventListener("resize", this.onScrollHandler(this))
+        if (this.StickyRef.current) {
+            this.StickyRef.current.removeEventListener(
+                "DOMSubtreeModified",
+                this.onScrollHandler(this),
+                false
+            )
+        }
     }
 
     registerEvents() {
         window.addEventListener("scroll", this.onScrollHandler(this))
         window.addEventListener("resize", this.onScrollHandler(this))
+        if (this.StickyRef.current) {
+            this.StickyRef.current.addEventListener(
+                "DOMSubtreeModified",
+                this.onScrollHandler(this),
+                false
+            )
+        }
     }
 
     renderContainer() {
