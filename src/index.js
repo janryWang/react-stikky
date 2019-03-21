@@ -263,12 +263,14 @@ class Sticky extends Component {
     }
 
     initCloneContainerNode() {
+        const { className } = this.props
         if (this.wrapperNode) return this.wrapperNode
         this.oldNode = this.getContainerNode()
         this.oldNodeHeight = this.getOldNodeHeight()
         this.wrapperNode = document.createElement("div")
         this.wrapperNode.style.height = this.oldNodeHeight + "px"
         this.wrapperNode.classList.add("sticky-wrapper")
+        if (className) this.wrapperNode.classList.add(className)
         this.oldNode.parentNode.insertBefore(this.wrapperNode, this.oldNode)
         this.wrapperNode.appendChild(this.oldNode)
     }
@@ -302,7 +304,7 @@ class Sticky extends Component {
         return (
             <div
                 ref={this.StickyRef}
-                className={ClassNames("sticky-container", className)}
+                className="sticky-container"
                 style={this.props.style}
             >
                 {typeof children === "function"
