@@ -298,11 +298,11 @@ class Sticky extends Component {
     }
 
     renderContainer() {
-        const { children } = this.props
+        const { children, className } = this.props
         return (
             <div
                 ref={this.StickyRef}
-                className="sticky-container"
+                className={ClassNames("sticky-container", className)}
                 style={this.props.style}
             >
                 {typeof children === "function"
