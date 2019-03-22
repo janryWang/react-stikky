@@ -127,11 +127,7 @@ class Sticky extends Component {
         let self = this
         if (this.props.edge == "top") {
             if (isSticky) {
-                var newHeight = this.getOldNodeHeight()
-                if (this.oldNodeHeight !== newHeight) {
-                    this.wrapperNode.style.height = newHeight + "px"
-                    this.oldNodeHeight = newHeight
-                }
+                this.updateContainerSize()
                 this.setStyle(this.container, {
                     position: "fixed",
                     width: nodeData.width + "px",
@@ -143,7 +139,7 @@ class Sticky extends Component {
                 })
                 this.sticking = true
             } else {
-                if (type === "resize") this.wrapperNode.style.height = "auto"
+                if (type === "resize") this.wrapperNode.style.minHeight = "auto"
                 self.setStyle(self.container, {
                     left: "",
                     zIndex: "",
@@ -157,11 +153,7 @@ class Sticky extends Component {
             }
         } else {
             if (isSticky) {
-                var newHeight = this.getOldNodeHeight()
-                if (this.oldNodeHeight !== newHeight) {
-                    this.wrapperNode.style.height = newHeight + "px"
-                    this.oldNodeHeight = newHeight
-                }
+                this.updateContainerSize()
                 this.setStyle(this.container, {
                     position: "fixed",
                     width: nodeData.width + "px",
@@ -173,7 +165,7 @@ class Sticky extends Component {
                 })
                 this.sticking = true
             } else {
-                if (type === "resize") this.wrapperNode.style.height = "auto"
+                if (type === "resize") this.wrapperNode.style.minHeight = "auto"
                 this.setStyle(this.container, {
                     bottom: self.props.triggerDistance + "px"
                 })
@@ -268,35 +260,31 @@ class Sticky extends Component {
         this.oldNode = this.getContainerNode()
         this.oldNodeHeight = this.getOldNodeHeight()
         this.wrapperNode = document.createElement("div")
-        this.wrapperNode.style.height = this.oldNodeHeight + "px"
+        this.wrapperNode.style.minHeight = this.oldNodeHeight + "px"
         this.wrapperNode.classList.add("sticky-wrapper")
         if (className) this.wrapperNode.classList.add(className)
         this.oldNode.parentNode.insertBefore(this.wrapperNode, this.oldNode)
         this.wrapperNode.appendChild(this.oldNode)
     }
 
+    updateContainerSize() {
+        if (this.wrapperNode) {
+            var newHeight = this.getOldNodeHeight()
+            if (this.oldNodeHeight !== newHeight) {
+                this.wrapperNode.style.minHeight = newHeight + "px"
+                this.oldNodeHeight = newHeight
+            }
+        }
+    }
+
     cancelEvents() {
         window.removeEventListener("scroll", this.onScrollHandler(this))
         window.removeEventListener("resize", this.onScrollHandler(this))
-        if (this.StickyRef.current) {
-            this.StickyRef.current.removeEventListener(
-                "DOMSubtreeModified",
-                this.onScrollHandler(this),
-                false
-            )
-        }
     }
 
     registerEvents() {
         window.addEventListener("scroll", this.onScrollHandler(this))
         window.addEventListener("resize", this.onScrollHandler(this))
-        if (this.StickyRef.current) {
-            this.StickyRef.current.addEventListener(
-                "DOMSubtreeModified",
-                this.onScrollHandler(this),
-                false
-            )
-        }
     }
 
     renderContainer() {
